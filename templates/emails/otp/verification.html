@@ -1,0 +1,109 @@
+{% extends "emails/base.html" %} {% block title %} {{ title }} {% endblock %}
+{%block content %}
+
+<h1
+  class="heading"
+  style="
+    margin: 0 0 14px 0;
+    color: #0f172a;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 800;
+    text-align: center;
+  "
+>
+  {{ title }}
+</h1>
+
+<p
+  class="body-text"
+  style="
+    margin: 0 0 24px 0;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: center;
+  "
+>
+  Hello {{ user.first_name|default:"there" }},
+</p>
+
+<p
+  class="body-text"
+  style="
+    margin: 0 0 28px 0;
+    color: #475569;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: center;
+  "
+>
+  Use the verification code below to complete your {{ action }}.
+</p>
+
+<!-- OTP -->
+
+<table
+  width="100%"
+  role="presentation"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+>
+  <tr>
+    <td
+      align="center"
+      style="
+        background-color: #f0fdf9;
+        border: 1px solid #d7f5e5;
+        border-radius: 16px;
+        padding: 24px;
+      "
+    >
+      <span
+        class="otp-code"
+        style="
+          color: #10644d;
+          font-size: 34px;
+          line-height: 42px;
+          font-weight: 800;
+          letter-spacing: 10px;
+        "
+      >
+        {{ otp }}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<p
+  class="body-text"
+  style="
+    margin: 24px 0 0 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+  "
+>
+  This code expires in
+  <strong style="color: #10644d"> {{ expires_minutes }} minutes </strong>.
+</p>
+
+<p
+  style="
+    margin: 28px 0 0 0;
+    padding: 16px;
+    background-color: #fff4d6;
+    border-radius: 12px;
+    color: #7c5a00;
+    font-size: 12px;
+    line-height: 19px;
+    text-align: center;
+  "
+>
+  If you didn't request this code, you can safely ignore this email. Never share
+  this code with anyone.
+</p>
+
+{% endblock %}
