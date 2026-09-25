@@ -21,7 +21,19 @@ from .views import (
     ChangePasswordView
 )
 
-urlpatterns = [
+from rest_framework.routers import DefaultRouter
+from .views import AppVersionViewSet
+
+router = DefaultRouter()
+
+router.register(
+    r"app-versions",
+    AppVersionViewSet,
+    basename="app-version",
+)
+
+urlpatterns = router.urls
+urlpatterns += [
     path("register/", RegisterView.as_view()),
     path("login/", LoginView.as_view()),
     path("token/refresh/", WalletFlowTokenRefreshView.as_view()),

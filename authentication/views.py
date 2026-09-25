@@ -1801,3 +1801,34 @@ class ChangePasswordView(APIView):
                 message="Something went wrong while changing your password.",
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
+# core/views.py
+
+from rest_framework import viewsets
+from rest_framework.permissions import AllowAny, IsAdminUser
+
+from .models import AppVersion
+from .serializers import AppVersionSerializer
+
+
+class AppVersionViewSet(viewsets.ModelViewSet):
+    queryset = AppVersion.objects.all().order_by("-updated_at")
+    serializer_class = AppVersionSerializer
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            return [AllowAny()]
+
+        return [IsAdminUser()]
+
+    def get_queryset(self):
+        queryset = AppVersion.objects.all()
+
+        platform = self.request.query_params.get("platform")
+
+        if platform:
+            queryset = queryset.filter(
+                platform=platform,
+                is_active=True,
+            )
+
+        return queryset.order_by("-updated_at")

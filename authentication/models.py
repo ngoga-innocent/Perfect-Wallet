@@ -122,3 +122,30 @@ class OTPVerification(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.purpose}"
+# core/models.py
+
+
+class AppVersion(models.Model):
+    PLATFORM_CHOICES = (
+        ("android", "Android"),
+        ("ios", "iOS"),
+    )
+
+    platform = models.CharField(
+        max_length=20,
+        choices=PLATFORM_CHOICES,
+        unique=True,
+    )
+
+    latest_version = models.CharField(max_length=20)
+    minimum_version = models.CharField(max_length=20)
+
+    update_url = models.URLField(blank=True)
+
+    force_update = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.platform} - {self.latest_version}"

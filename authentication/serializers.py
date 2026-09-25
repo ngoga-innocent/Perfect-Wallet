@@ -263,3 +263,26 @@ class ChangePasswordSerializer(serializers.Serializer):
             )
 
         return attrs
+# core/serializers.py
+
+from rest_framework import serializers
+from .models import AppVersion
+
+
+class AppVersionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AppVersion
+        fields = [
+            "id",
+            "platform",
+            "latest_version",
+            "minimum_version",
+            "update_url",
+            "force_update",
+            "is_active",
+            "updated_at",
+        ]
+        read_only_fields = [
+            "id",
+            "updated_at",
+        ]
